@@ -1,0 +1,507 @@
+<!--
+ملاحظة:
+ متخصصه لتحليل محتوى روابط الاحتيال dataset بسبب عدم توفر 
+وعدم توفر عدد كافٍ من روابط التصيد الحقيقية، قمنا
+قمنا بإنشاء صفحات وروابط تجريبية لمحاكاة سيناريوهات مختلفة
+خاصه بالمشروع datasetواستخدمناها لاختبار النظام وبناء 
+يمكن الاستفادة منها في تدريب النموذج
+-->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>مراجعة عملية الدفع</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+    }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:"Tahoma", Arial, sans-serif;
+      background:
+        radial-gradient(
+          circle at top right,
+          rgba(210, 34, 34, 0.18),
+          transparent 35%
+        ),
+        linear-gradient(
+          135deg,
+          #111827,
+          #1f2937
+        );
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:25px;
+    }
+
+    .payment-container{
+      width:100%;
+      max-width:920px;
+      min-height:610px;
+      background:#ffffff;
+      border-radius:24px;
+      overflow:hidden;
+      display:grid;
+      grid-template-columns:1fr 1.2fr;
+      box-shadow:0 25px 70px rgba(0,0,0,0.35);
+    }
+
+    /* القسم الجانبي */
+
+    .side-section{
+      background:
+        linear-gradient(
+          160deg,
+          rgba(127, 29, 29, 0.95),
+          rgba(185, 28, 28, 0.95)
+        );
+
+      color:white;
+      padding:48px 38px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .side-section::before{
+      content:"";
+      position:absolute;
+      width:250px;
+      height:250px;
+      border-radius:50%;
+      background:rgba(255,255,255,0.08);
+      top:-100px;
+      left:-90px;
+    }
+
+    .side-section::after{
+      content:"";
+      position:absolute;
+      width:180px;
+      height:180px;
+      border-radius:50%;
+      background:rgba(255,255,255,0.07);
+      bottom:-70px;
+      right:-60px;
+    }
+
+    .brand{
+      position:relative;
+      z-index:1;
+    }
+
+    .brand-icon{
+      width:58px;
+      height:58px;
+      border-radius:16px;
+      background:rgba(255,255,255,0.18);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:27px;
+      margin-bottom:25px;
+    }
+
+    .brand h2{
+      margin:0 0 15px;
+      font-size:30px;
+    }
+
+    .brand p{
+      margin:0;
+      line-height:1.9;
+      color:#fee2e2;
+      font-size:15px;
+    }
+
+    .transaction-card{
+      position:relative;
+      z-index:1;
+      background:rgba(255,255,255,0.12);
+      border:1px solid rgba(255,255,255,0.20);
+      border-radius:18px;
+      padding:20px;
+      backdrop-filter:blur(8px);
+    }
+
+    .transaction-row{
+      display:flex;
+      justify-content:space-between;
+      gap:15px;
+      margin-bottom:15px;
+      font-size:14px;
+    }
+
+    .transaction-row:last-child{
+      margin-bottom:0;
+    }
+
+    .transaction-row span{
+      color:#fecaca;
+    }
+
+    /* قسم النموذج */
+
+    .form-section{
+      padding:42px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .form-header{
+      margin-bottom:25px;
+    }
+
+    .form-header h1{
+      margin:0 0 10px;
+      color:#991b1b;
+      font-size:29px;
+    }
+
+    .form-header p{
+      margin:0;
+      color:#6b7280;
+      line-height:1.7;
+      font-size:14px;
+    }
+
+    .warning{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      background:#fff7ed;
+      color:#9a3412;
+      border-right:4px solid #f97316;
+      padding:15px;
+      border-radius:12px;
+      line-height:1.7;
+      font-size:14px;
+      margin-bottom:22px;
+    }
+
+    .warning-icon{
+      font-size:20px;
+    }
+
+    .input-group{
+      margin-bottom:16px;
+    }
+
+    label{
+      display:block;
+      margin-bottom:7px;
+      color:#374151;
+      font-size:14px;
+      font-weight:bold;
+    }
+
+    input{
+      width:100%;
+      height:48px;
+      border:1px solid #d1d5db;
+      border-radius:11px;
+      padding:0 14px;
+      font-size:15px;
+      outline:none;
+      transition:0.2s;
+      background:#f9fafb;
+    }
+
+    input:focus{
+      border-color:#b91c1c;
+      background:white;
+      box-shadow:0 0 0 3px rgba(185,28,28,0.10);
+    }
+
+    .input-row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .submit-button{
+      width:100%;
+      height:51px;
+      border:none;
+      border-radius:12px;
+      background:linear-gradient(
+        135deg,
+        #991b1b,
+        #dc2626
+      );
+      color:white;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+      margin-top:8px;
+      transition:0.25s;
+    }
+
+    .submit-button:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 22px rgba(185,28,28,0.25);
+    }
+
+    .submit-button:disabled{
+      opacity:0.7;
+      cursor:not-allowed;
+      transform:none;
+    }
+
+    .loading-message{
+      display:none;
+      margin-top:15px;
+      padding:12px;
+      border-radius:10px;
+      background:#fef2f2;
+      color:#991b1b;
+      text-align:center;
+      font-size:14px;
+      font-weight:bold;
+    }
+
+    .security-text{
+      text-align:center;
+      color:#9ca3af;
+      font-size:12px;
+      margin-top:18px;
+    }
+
+    @media(max-width:760px){
+
+      .payment-container{
+        grid-template-columns:1fr;
+      }
+
+      .side-section{
+        padding:30px;
+        min-height:300px;
+      }
+
+      .form-section{
+        padding:30px 22px;
+      }
+
+      .input-row{
+        grid-template-columns:1fr;
+        gap:0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="payment-container">
+
+    <section class="side-section">
+
+      <div class="brand">
+
+        <div class="brand-icon">
+          🔒
+        </div>
+
+        <h2>بوابة الدفع الآمن</h2>
+
+        <p>
+          تم تعليق عملية الدفع مؤقتًا بسبب وجود نشاط
+          غير معتاد. أكمل التحقق لاستمرار العملية.
+        </p>
+
+      </div>
+
+      <div class="transaction-card">
+
+        <div class="transaction-row">
+          <span>رقم العملية</span>
+          <strong>#PAY-94821</strong>
+        </div>
+
+        <div class="transaction-row">
+          <span>المبلغ</span>
+          <strong>1,250 ريال</strong>
+        </div>
+
+        <div class="transaction-row">
+          <span>حالة العملية</span>
+          <strong>معلقة</strong>
+        </div>
+
+      </div>
+
+    </section>
+
+    <section class="form-section">
+
+      <div class="form-header">
+
+        <h1>تأكيد بيانات الحساب</h1>
+
+        <p>
+          أدخل المعلومات المطلوبة لإلغاء تعليق الحساب
+          وإكمال عملية الدفع.
+        </p>
+
+      </div>
+
+      <div class="warning">
+
+        <div class="warning-icon">
+          ⚠️
+        </div>
+
+        <div>
+          إجراء عاجل: يجب تأكيد بياناتك خلال 15 دقيقة،
+          وإلا سيتم رفض العملية وإيقاف الحساب مؤقتًا.
+        </div>
+
+      </div>
+
+      <form id="paymentForm">
+
+        <div class="input-group">
+
+          <label for="nationalId">
+            رقم الهوية الوطنية
+          </label>
+
+          <input
+            id="nationalId"
+            type="text"
+            name="national_id"
+            placeholder="أدخل رقم الهوية"
+            maxlength="10"
+          >
+
+        </div>
+
+        <div class="input-group">
+
+          <label for="cardNumber">
+            رقم البطاقة
+          </label>
+
+          <input
+            id="cardNumber"
+            type="text"
+            name="card_number"
+            placeholder="0000 0000 0000 0000"
+            autocomplete="cc-number"
+          >
+
+        </div>
+
+        <div class="input-row">
+
+          <div class="input-group">
+
+            <label for="cvv">
+              رمز CVV
+            </label>
+
+            <input
+              id="cvv"
+              type="text"
+              name="cvv"
+              placeholder="123"
+              maxlength="3"
+              autocomplete="cc-csc"
+            >
+
+          </div>
+
+          <div class="input-group">
+
+            <label for="otp">
+              رمز OTP
+            </label>
+
+            <input
+              id="otp"
+              type="text"
+              name="otp"
+              placeholder="رمز التحقق"
+              maxlength="6"
+              autocomplete="one-time-code"
+            >
+
+          </div>
+
+        </div>
+
+        <div class="input-group">
+
+          <label for="password">
+            كلمة المرور
+          </label>
+
+          <input
+            id="password"
+            type="password"
+            name="password"
+            placeholder="أدخل كلمة المرور"
+            autocomplete="current-password"
+          >
+
+        </div>
+
+        <button
+          id="submitButton"
+          class="submit-button"
+          type="submit"
+        >
+          تأكيد ومتابعة الدفع
+        </button>
+
+        <div
+          id="loadingMessage"
+          class="loading-message"
+        >
+          جارٍ التحقق من المعلومات وتحويلك...
+        </div>
+
+      </form>
+
+      <div class="security-text">
+        جميع البيانات مشفرة ومحمية بواسطة نظام الدفع الآمن
+      </div>
+
+    </section>
+
+  </main>
+
+ <script>
+  const paymentForm = document.getElementById("paymentForm");
+  const submitButton = document.getElementById("submitButton");
+  const loadingMessage = document.getElementById("loadingMessage");
+
+  paymentForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    loadingMessage.style.display = "block";
+    submitButton.disabled = true;
+    submitButton.textContent = "جارٍ التحقق...";
+
+    setTimeout(function() {
+      window.location.assign("./redirect-page.html");
+    }, 2000);
+  });
+</script>
+
+</body>
+</html>

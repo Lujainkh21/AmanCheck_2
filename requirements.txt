@@ -1,0 +1,7 @@
+Flask
+playwright
+pandas
+scikit-learn
+joblib
+requests
+gunicorn

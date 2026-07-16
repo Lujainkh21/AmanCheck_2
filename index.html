@@ -1,0 +1,2131 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AmanCheck</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#fbf2ed;
+  --card:#ffffff;
+  --ink:#06243d;
+  --ink2:#0b385c;
+  --muted:#738093;
+  --soft:#f4e7df;
+  --line:#eee2da;
+  --blue:#0b4168;
+  --blue2:#0f5c89;
+  --green:#18aa5a;
+  --red:#df4b43;
+  --orange:#d77455;
+  --shadow:0 18px 45px rgba(6,36,61,.08);
+  --shadow2:0 28px 70px rgba(6,36,61,.14);
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  font-family:"Tajawal", Arial, sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  overflow-x:hidden;
+}
+
+button,input{font-family:inherit}
+button{cursor:pointer}
+.hidden{display:none !important}
+
+/* ================= LOGO IMG FIX ================= */
+
+.logo-frame{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:white;
+  border-radius:18px;
+  overflow:hidden;
+  padding:10px;
+  box-shadow:0 12px 28px rgba(6,36,61,.07);
+}
+
+.logo-frame img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
+
+.splash-logo{
+  position:absolute;
+  top:34px;
+  right:42px;
+  width:185px;
+  height:74px;
+  z-index:5;
+}
+
+.login-logo{
+  width:150px;
+  height:64px;
+}
+
+.logo-main{
+  width:150px;
+  height:74px;
+  margin:0 auto 18px;
+}
+
+/* ================= SPLASH ================= */
+
+.splash{
+  min-height:100vh;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(255,255,255,.95), transparent 32%),
+    radial-gradient(circle at 85% 18%, rgba(221,118,80,.16), transparent 30%),
+    linear-gradient(135deg,#f9eee8,#fffaf7 48%,#f2dfd7);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:36px;
+}
+
+.splash::before{
+  content:"";
+  position:absolute;
+  width:900px;
+  height:900px;
+  border-radius:50%;
+  background:rgba(6,36,61,.06);
+  left:-360px;
+  bottom:-380px;
+  animation:orbMove 8s ease-in-out infinite alternate;
+}
+
+.splash::after{
+  content:"";
+  position:absolute;
+  width:500px;
+  height:500px;
+  border-radius:50%;
+  background:rgba(221,118,80,.12);
+  right:-180px;
+  top:-160px;
+  animation:orbMove 7s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes orbMove{
+  from{transform:translate(0,0) scale(1)}
+  to{transform:translate(45px,-35px) scale(1.08)}
+}
+
+.splash-shell{
+  width:min(1180px,96vw);
+  min-height:680px;
+  position:relative;
+  z-index:2;
+  border-radius:42px;
+  background:rgba(255,255,255,.72);
+  backdrop-filter:blur(22px);
+  box-shadow:var(--shadow2);
+  border:1px solid rgba(255,255,255,.85);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  overflow:hidden;
+}
+
+.splash-text{
+  padding:150px 58px 60px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  animation:enterUp .9s ease both;
+}
+
+.ai-pill{
+  width:max-content;
+  background:rgba(6,36,61,.08);
+  color:var(--ink);
+  padding:10px 16px;
+  border-radius:999px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:22px;
+}
+
+.pulse{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 0 0 rgba(24,169,87,.55);
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(24,169,87,.55)}
+  70%{box-shadow:0 0 0 13px rgba(24,169,87,0)}
+  100%{box-shadow:0 0 0 0 rgba(24,169,87,0)}
+}
+
+.splash-text h1{
+  margin:0;
+  font-size:68px;
+  line-height:1.08;
+  font-weight:900;
+  letter-spacing:-1px;
+}
+
+.splash-text h1 span{
+  background:linear-gradient(90deg,var(--ink),var(--orange));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.splash-text p{
+  margin:24px 0 34px;
+  color:var(--muted);
+  font-size:20px;
+  line-height:2;
+  font-weight:700;
+  max-width:520px;
+}
+
+.main-btn{
+  width:230px;
+  height:62px;
+  border:0;
+  border-radius:20px;
+  background:var(--ink);
+  color:white;
+  font-size:21px;
+  font-weight:900;
+  box-shadow:0 18px 35px rgba(6,36,61,.25);
+  position:relative;
+  overflow:hidden;
+  transition:.25s ease;
+}
+
+.main-btn:hover{
+  transform:translateY(-5px);
+  box-shadow:0 25px 45px rgba(6,36,61,.32);
+}
+
+.main-btn::after{
+  content:"";
+  position:absolute;
+  top:0;
+  right:-60%;
+  width:45%;
+  height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+  transform:skewX(-20deg);
+  animation:shine 2.5s infinite;
+}
+
+@keyframes shine{
+  0%{right:-60%}
+  55%,100%{right:120%}
+}
+
+.splash-visual{
+  position:relative;
+  display:grid;
+  place-items:center;
+  padding:50px;
+  animation:fadeIn .9s ease .2s both;
+}
+
+.phone{
+  width:310px;
+  height:560px;
+  border-radius:44px;
+  background:linear-gradient(180deg,#fff,#f5eee9);
+  border:10px solid rgba(255,255,255,.9);
+  box-shadow:0 30px 75px rgba(6,36,61,.18);
+  transform:rotate(-5deg);
+  animation:phoneFloat 4.5s ease-in-out infinite;
+  position:relative;
+  overflow:hidden;
+}
+
+@keyframes phoneFloat{
+  0%,100%{transform:translateY(0) rotate(-5deg)}
+  50%{transform:translateY(-18px) rotate(-3deg)}
+}
+
+.phone::before{
+  content:"";
+  position:absolute;
+  top:18px;
+  right:50%;
+  transform:translateX(50%);
+  width:95px;
+  height:8px;
+  border-radius:20px;
+  background:#d7dfe7;
+}
+
+.phone-card{
+  width:84%;
+  background:white;
+  border-radius:28px;
+  padding:22px;
+  margin:95px auto 0;
+  box-shadow:0 18px 40px rgba(6,36,61,.12);
+  position:relative;
+  overflow:hidden;
+}
+
+.scan-beam{
+  position:absolute;
+  right:0;
+  left:0;
+  top:0;
+  height:4px;
+  background:linear-gradient(90deg,transparent,var(--green),transparent);
+  animation:scanBeam 2s infinite;
+}
+
+@keyframes scanBeam{
+  from{transform:translateY(0)}
+  to{transform:translateY(230px)}
+}
+
+.url-mini{
+  direction:ltr;
+  text-align:left;
+  background:#f4f7fa;
+  padding:12px;
+  border-radius:14px;
+  color:#6b7682;
+  font-weight:800;
+  font-size:13px;
+}
+
+.risk-circle{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  margin:28px auto;
+  display:grid;
+  place-items:center;
+  background:conic-gradient(var(--red) 0 78%, #edf0f3 78% 100%);
+  position:relative;
+}
+
+.risk-circle::before{
+  content:"";
+  position:absolute;
+  width:88px;
+  height:88px;
+  background:white;
+  border-radius:50%;
+}
+
+.risk-circle span{
+  position:relative;
+  z-index:2;
+  font-size:29px;
+  font-weight:900;
+  color:var(--red);
+}
+
+.mini-tag{
+  background:#fff2e9;
+  color:#a33d30;
+  border-radius:14px;
+  padding:10px;
+  font-size:13px;
+  text-align:center;
+  font-weight:900;
+  margin-bottom:9px;
+}
+
+.float-card{
+  position:absolute;
+  min-width:150px;
+  background:rgba(255,255,255,.82);
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 18px 40px rgba(6,36,61,.12);
+  border-radius:20px;
+  padding:18px;
+  backdrop-filter:blur(14px);
+  animation:floatingCard 4s ease-in-out infinite;
+}
+
+.float-card span{
+  display:block;
+  color:#6d7885;
+  font-weight:800;
+  font-size:13px;
+}
+
+.float-card strong{
+  display:block;
+  color:var(--ink);
+  font-size:24px;
+  margin-top:5px;
+}
+
+.card-a{top:135px;right:40px}
+.card-b{bottom:150px;left:42px;animation-delay:1s}
+
+@keyframes floatingCard{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-16px)}
+}
+
+/* ================= LOGIN ================= */
+
+.login{
+  min-height:100vh;
+  padding:34px 52px;
+  animation:pageIn .6s ease both;
+  background:
+    radial-gradient(circle at 14% 85%,rgba(0,0,0,.08),transparent 18%),
+    radial-gradient(circle at 80% 15%,rgba(217,117,84,.14),transparent 34%),
+    linear-gradient(135deg,#fbf2ed,#fff8f3);
+}
+
+.login-wrap{
+  width:min(1180px,96vw);
+  margin:0 auto;
+}
+
+.login-topbar{
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:24px;
+}
+
+.login-tools{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.lang-pill,
+.mode-pill{
+  height:42px;
+  background:white;
+  border-radius:999px;
+  padding:0 18px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:900;
+  box-shadow:var(--shadow);
+}
+
+.mode-toggle{
+  width:58px;
+  height:30px;
+  border-radius:999px;
+  background:var(--ink);
+  padding:3px;
+}
+
+.mode-toggle span{
+  display:block;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  background:white;
+}
+
+.login-layout{
+  display:grid;
+  grid-template-columns:.95fr 1.05fr;
+  gap:22px;
+  align-items:stretch;
+}
+
+.login-panel{
+  background:white;
+  border-radius:28px;
+  padding:42px;
+  box-shadow:var(--shadow);
+  min-height:560px;
+}
+
+.login-panel h1{
+  margin:0 0 12px;
+  font-size:56px;
+  line-height:1.05;
+  font-weight:900;
+  color:var(--ink);
+}
+
+.login-panel .sub{
+  margin:0 0 28px;
+  color:#7d8794;
+  font-weight:900;
+  line-height:1.8;
+}
+
+.form-label{
+  display:block;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.login-panel input[type="text"],
+.login-panel input[type="password"]{
+  width:100%;
+  height:60px;
+  border:0;
+  outline:0;
+  border-radius:16px;
+  background:#f2e3da;
+  padding:0 18px;
+  font-size:16px;
+  font-weight:900;
+  color:var(--ink);
+  margin-bottom:18px;
+}
+
+.login-panel input:focus{
+  background:white;
+  box-shadow:0 0 0 4px rgba(11,65,104,.10);
+}
+
+.login-options{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-weight:900;
+  margin-bottom:18px;
+}
+
+.remember{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.login-btn{
+  width:100%;
+  height:60px;
+  border:0;
+  border-radius:16px;
+  background:#e8ddd6;
+  color:#b9aaa2;
+  font-size:20px;
+  font-weight:900;
+  margin-bottom:16px;
+  transition:.25s ease;
+}
+
+.login-btn.ready{
+  background:var(--ink);
+  color:white;
+  box-shadow:0 18px 35px rgba(6,36,61,.20);
+}
+
+.new-account{
+  width:100%;
+  height:58px;
+  border:2px solid var(--ink);
+  background:white;
+  color:var(--ink);
+  border-radius:16px;
+  font-size:18px;
+  font-weight:900;
+  margin-bottom:16px;
+}
+
+.login-links{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.login-links a{
+  text-decoration:none;
+  color:var(--ink);
+  background:#fff7f2;
+  border-radius:14px;
+  padding:13px;
+  text-align:center;
+  font-weight:900;
+}
+
+.login-hero{
+  position:relative;
+  min-height:560px;
+  border-radius:28px;
+  overflow:hidden;
+  padding:48px;
+  color:white;
+  background:
+    radial-gradient(circle at 18% 22%,rgba(255,255,255,.35),transparent 23%),
+    linear-gradient(135deg,#0a314f,#06243d);
+  box-shadow:var(--shadow);
+}
+
+.login-hero::after{
+  content:"";
+  position:absolute;
+  width:420px;
+  height:420px;
+  border-radius:50%;
+  left:-110px;
+  bottom:-180px;
+  background:rgba(255,255,255,.08);
+}
+
+.login-hero h2{
+  margin:0;
+  font-size:54px;
+  line-height:1.1;
+  font-weight:900;
+}
+
+.login-hero p{
+  width:75%;
+  margin:26px 0 0;
+  color:rgba(255,255,255,.78);
+  font-size:19px;
+  line-height:1.9;
+  font-weight:900;
+}
+
+.login-card-visual{
+  position:absolute;
+  width:360px;
+  height:190px;
+  right:55px;
+  bottom:46px;
+  border-radius:26px;
+  padding:28px;
+  background:linear-gradient(135deg,#ffc29b,#e68d6e);
+  box-shadow:0 25px 50px rgba(0,0,0,.23);
+  transform:rotate(-5deg);
+  animation:cardFloat 4.5s ease-in-out infinite;
+  z-index:2;
+}
+
+@keyframes cardFloat{
+  0%,100%{transform:translateY(0) rotate(-5deg)}
+  50%{transform:translateY(-15px) rotate(-3deg)}
+}
+
+.login-card-visual b{
+  display:block;
+  font-size:20px;
+}
+
+.login-card-visual span{
+  display:block;
+  direction:ltr;
+  text-align:left;
+  margin-top:65px;
+  font-size:22px;
+  letter-spacing:3px;
+  font-weight:900;
+}
+
+.info-glass{
+  position:absolute;
+  left:44px;
+  bottom:58px;
+  width:240px;
+  border-radius:20px;
+  padding:20px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(14px);
+  color:white;
+  font-weight:900;
+  line-height:1.7;
+  z-index:3;
+}
+
+/* ================= DASHBOARD ================= */
+
+.app{
+  min-height:100vh;
+  padding:20px;
+  animation:pageIn .6s ease both;
+  background:
+    radial-gradient(circle at 15% 12%,rgba(255,255,255,.95),transparent 27%),
+    radial-gradient(circle at 90% 15%,rgba(217,117,84,.15),transparent 30%),
+    linear-gradient(135deg,#fbf2ed,#fff7f2);
+}
+
+.dashboard{
+  width:calc(100vw - 40px);
+  max-width:1760px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:245px minmax(0,1fr) 235px;
+  gap:16px;
+  direction:ltr;
+}
+
+.left,.mid,.right{direction:rtl}
+
+.left-panel,
+.right-panel{
+  min-height:calc(100vh - 40px);
+  border-radius:30px;
+  padding:18px;
+  background:rgba(255,255,255,.76);
+  box-shadow:var(--shadow);
+  border:1px solid rgba(255,255,255,.9);
+  backdrop-filter:blur(14px);
+}
+
+.quick-top{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.quick-top .quick-card{
+  min-height:76px;
+  font-size:12px;
+}
+
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-bottom:14px;
+}
+
+.quick-card{
+  min-height:104px;
+  border-radius:18px;
+  background:white;
+  box-shadow:var(--shadow);
+  display:grid;
+  place-items:center;
+  text-align:center;
+  padding:10px;
+  font-weight:900;
+  position:relative;
+  transition:.22s ease;
+}
+
+.quick-card:hover,
+.menu-item:hover,
+.card:hover,
+.promo:hover,
+.app-ad:hover{
+  transform:translateY(-5px);
+  box-shadow:0 24px 55px rgba(6,36,61,.12);
+}
+
+.q-icon{
+  width:36px;
+  height:36px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  background:#f3e2db;
+  margin-bottom:7px;
+  font-size:18px;
+}
+
+.badge{
+  position:absolute;
+  top:8px;
+  left:8px;
+  background:#ef6971;
+  color:white;
+  border-radius:30px;
+  padding:2px 7px;
+  font-size:10px;
+}
+
+.promo{
+  background:white;
+  border-radius:23px;
+  box-shadow:var(--shadow);
+  padding:20px;
+  margin-bottom:14px;
+  transition:.25s ease;
+}
+
+.promo h2{
+  font-size:38px;
+  margin:0;
+  font-weight:900;
+}
+
+.promo p{
+  margin:8px 0 0;
+  font-weight:900;
+  line-height:1.5;
+  color:#33475c;
+}
+
+.promo-btn{
+  margin-top:18px;
+  background:linear-gradient(135deg,#ffd3cd,#f6b7ae);
+  color:#8f493f;
+  border-radius:17px;
+  padding:15px;
+  text-align:center;
+  font-weight:900;
+}
+
+.app-ad{
+  background:linear-gradient(135deg,#092c49,#0b4c72);
+  border-radius:23px;
+  box-shadow:var(--shadow);
+  padding:18px;
+  color:white;
+  min-height:150px;
+  transition:.25s ease;
+  position:relative;
+  overflow:hidden;
+}
+
+.app-ad::after{
+  content:"";
+  position:absolute;
+  width:160px;
+  height:160px;
+  border-radius:50%;
+  background:rgba(255,255,255,.10);
+  left:-55px;
+  bottom:-65px;
+}
+
+.app-ad h3{
+  margin:0 0 8px;
+  font-size:25px;
+  font-weight:900;
+}
+
+.app-ad p{
+  margin:0;
+  color:rgba(255,255,255,.82);
+  line-height:1.6;
+  font-weight:800;
+}
+
+.app-ad button{
+  margin-top:14px;
+  height:38px;
+  border:0;
+  border-radius:12px;
+  background:white;
+  color:var(--blue);
+  padding:0 16px;
+  font-weight:900;
+}
+
+.right-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.lang{font-weight:900}
+
+.logout{
+  border:2px solid #7d97aa;
+  background:transparent;
+  color:var(--ink);
+  border-radius:12px;
+  padding:10px 22px;
+  font-size:15px;
+  font-weight:900;
+}
+
+.menu{
+  background:#f4e6de;
+  border-radius:23px;
+  padding:14px 12px;
+}
+
+.menu-title,
+.menu-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.menu-title{
+  background:rgba(255,255,255,.45);
+  border-radius:15px;
+  font-weight:900;
+  padding:13px;
+  margin-bottom:8px;
+}
+
+.menu-item{
+  min-height:45px;
+  font-size:14px;
+  font-weight:900;
+  padding:0 10px;
+  border-radius:12px;
+  transition:.2s;
+}
+
+.menu-item.active{
+  background:var(--ink);
+  color:white;
+}
+
+.menu-footer{
+  border-top:1px solid #e2cfc5;
+  margin-top:15px;
+  padding:17px 8px 4px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  font-weight:900;
+}
+
+.topbar{
+  display:grid;
+  grid-template-columns:200px 1fr;
+  gap:16px;
+  margin-bottom:16px;
+}
+
+.hello,
+.search{
+  height:58px;
+  background:white;
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  display:flex;
+  align-items:center;
+  font-weight:900;
+}
+
+.hello{justify-content:center}
+
+.search{
+  justify-content:space-between;
+  padding:0 22px;
+  color:#89939e;
+}
+
+.card{
+  background:white;
+  border-radius:23px;
+  box-shadow:var(--shadow);
+  padding:18px;
+  margin-bottom:14px;
+  transition:.25s ease;
+}
+
+.card-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin-bottom:16px;
+  font-weight:900;
+}
+
+.card-head h2{
+  margin:0;
+  font-size:23px;
+}
+
+.account-body{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:18px;
+  align-items:center;
+}
+
+.open-acct{
+  height:50px;
+  border:2px solid #9ab1c3;
+  background:white;
+  border-radius:13px;
+  padding:0 18px;
+  font-size:16px;
+  font-weight:900;
+  color:#415b72;
+}
+
+.acct-box{
+  min-height:118px;
+  border:2px solid #8bbce9;
+  border-radius:18px;
+  padding:17px;
+  background:
+    radial-gradient(circle at 18% 16%,rgba(255,255,255,.24),transparent 27%),
+    linear-gradient(135deg,#113d61,#06243d);
+  box-shadow:inset 0 -4px 0 #82b4e5;
+  color:white;
+  overflow:hidden;
+  position:relative;
+}
+
+.acct-box::after{
+  content:"";
+  position:absolute;
+  width:170px;
+  height:170px;
+  border-radius:50%;
+  left:-50px;
+  bottom:-80px;
+  background:rgba(255,255,255,.10);
+}
+
+.acct-type{
+  display:block;
+  width:max-content;
+  margin-right:auto;
+  background:rgba(255,255,255,.15);
+  padding:6px 12px;
+  border-radius:999px;
+  font-weight:900;
+  margin-bottom:18px;
+}
+
+.acct-num{
+  font-size:22px;
+  font-weight:900;
+  direction:ltr;
+  text-align:right;
+  letter-spacing:2px;
+}
+
+.balance{
+  font-weight:900;
+  margin-top:10px;
+  display:flex;
+  justify-content:space-between;
+  color:rgba(255,255,255,.88);
+}
+
+.aman-hero{
+  position:relative;
+  overflow:hidden;
+  border-radius:34px;
+  padding:38px 42px;
+  min-height:265px;
+  color:white;
+  background:
+    radial-gradient(circle at 13% 70%,rgba(255,255,255,.16),transparent 27%),
+    linear-gradient(135deg,#123e60,#0b4f79);
+  box-shadow:var(--shadow);
+  margin-bottom:14px;
+}
+
+.aman-hero::after{
+  content:"";
+  position:absolute;
+  width:330px;
+  height:330px;
+  border-radius:50%;
+  left:-90px;
+  bottom:-165px;
+  background:rgba(255,255,255,.12);
+}
+
+.aman-hero h1{
+  position:relative;
+  z-index:2;
+  margin:0;
+  font-size:46px;
+  font-weight:900;
+}
+
+.aman-hero p{
+  position:relative;
+  z-index:2;
+  margin:22px 0 28px;
+  max-width:760px;
+  color:rgba(255,255,255,.78);
+  font-size:19px;
+  line-height:1.8;
+  font-weight:900;
+}
+
+.aman-stats{
+  position:relative;
+  z-index:2;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.aman-stat{
+  min-height:105px;
+  border-radius:22px;
+  padding:20px;
+  background:rgba(255,255,255,.13);
+  border:1px solid rgba(255,255,255,.16);
+  backdrop-filter:blur(12px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.aman-stat span{
+  display:block;
+  color:rgba(255,255,255,.70);
+  font-weight:900;
+  font-size:15px;
+}
+
+.aman-stat strong{
+  display:block;
+  margin-top:8px;
+  font-size:32px;
+  font-weight:900;
+}
+
+.scan-card{
+  border-radius:32px;
+  padding:28px 32px;
+}
+
+.scan-card-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  margin-bottom:20px;
+}
+
+.scan-card-head h2{
+  margin:0;
+  font-size:31px;
+  font-weight:900;
+}
+
+.check-icon{
+  width:52px;
+  height:52px;
+  border-radius:16px;
+  background:var(--ink);
+  color:white;
+  display:grid;
+  place-items:center;
+  font-size:27px;
+  font-weight:900;
+}
+
+.scan-card p{
+  margin:0 0 20px;
+  color:var(--muted);
+  font-size:18px;
+  line-height:1.7;
+  font-weight:900;
+}
+
+.scan-row{
+  display:grid;
+  grid-template-columns:120px 1fr;
+  gap:12px;
+  margin-bottom:14px;
+}
+
+.scan-btn{
+  height:56px;
+  border:0;
+  border-radius:15px;
+  background:var(--ink);
+  color:white;
+  font-weight:900;
+  font-size:16px;
+}
+
+.scan-input{
+  height:56px;
+  border:1px solid #d6c7be;
+  outline:0;
+  border-radius:15px;
+  padding:0 18px;
+  direction:ltr;
+  text-align:left;
+  color:#56616e;
+  font-weight:800;
+}
+
+.scan-input:focus{
+  border-color:#9ab1c3;
+  box-shadow:0 0 0 5px rgba(11,65,104,.08);
+}
+
+.auto-bar{
+  min-height:50px;
+  border-radius:16px;
+  background:#edf9ef;
+  color:#2e8242;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+  font-weight:900;
+}
+
+.toggle{
+  width:56px;
+  height:30px;
+  border-radius:18px;
+  background:var(--green);
+  padding:3px;
+  cursor:pointer;
+}
+
+.toggle span{
+  display:block;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  background:white;
+  margin-right:auto;
+  transition:.2s;
+}
+
+.toggle.off{background:#aeb7c0}
+
+.toggle.off span{
+  margin-right:0;
+  margin-left:auto;
+}
+
+.error{
+  display:none;
+  background:#ffe7e7;
+  color:#b33333;
+  border-radius:12px;
+  padding:10px 12px;
+  font-size:13px;
+  font-weight:900;
+  margin-bottom:12px;
+}
+
+.result-inline{
+  display:none;
+  margin-top:18px;
+  border-radius:22px;
+  padding:16px;
+  background:#fff4ed;
+  border:1px solid #efd0bf;
+  animation:pop .4s ease both;
+}
+
+.result-inline.show{display:block}
+
+@keyframes pop{
+  from{opacity:0;transform:translateY(12px) scale(.98)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+.result-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.risk-box{
+  background:white;
+  border-radius:16px;
+  padding:14px;
+  text-align:center;
+  font-weight:900;
+}
+
+.risk-box span{
+  display:block;
+  color:#6d7885;
+  font-size:13px;
+  margin-bottom:7px;
+}
+
+.risk-box strong{
+  color:var(--red);
+  font-size:27px;
+}
+
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  justify-content:center;
+}
+
+.tag{
+  background:#f8d9d0;
+  color:#96372b;
+  padding:8px 12px;
+  border-radius:18px;
+  font-size:12px;
+  font-weight:900;
+}
+
+.bottom{
+  display:grid;
+  grid-template-columns:1.5fr .8fr .8fr;
+  gap:18px;
+}
+
+.bottom-card{
+  background:white;
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  padding:24px;
+  min-height:235px;
+}
+
+.bottom-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+.bottom-title h2{
+  margin:0;
+  font-size:26px;
+  font-weight:900;
+}
+
+.dark-pill{
+  width:52px;
+  height:52px;
+  border-radius:16px;
+  background:var(--ink);
+  color:white;
+  display:grid;
+  place-items:center;
+  font-weight:900;
+}
+
+.chart{
+  height:150px;
+  border:1px solid #e4e9ee;
+  border-radius:12px;
+  position:relative;
+  background:
+    linear-gradient(#e9edf1 1px,transparent 1px) 0 0/100% 25%,
+    linear-gradient(90deg,#e9edf1 1px,transparent 1px) 0 0/10% 100%,
+    #fff;
+  overflow:hidden;
+}
+
+.chart svg{
+  width:100%;
+  height:100%;
+}
+
+.card-visual{
+  height:150px;
+  border-radius:24px;
+  padding:22px;
+  color:white;
+  font-size:18px;
+  font-weight:900;
+  background:
+    radial-gradient(circle at 70% 20%,rgba(255,255,255,.28),transparent 25%),
+    linear-gradient(135deg,#d17659,#0b385c);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.finance-visual{
+  height:150px;
+  border-radius:24px;
+  background:#f7f5f3;
+  border:2px dashed #cad2da;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  color:#7b8795;
+  font-weight:900;
+}
+
+.footer{
+  grid-column:1/4;
+  background:white;
+  border-radius:18px;
+  padding:15px;
+  margin-top:14px;
+  text-align:center;
+  font-weight:900;
+  font-size:12px;
+  color:#536476;
+  box-shadow:var(--shadow);
+}
+
+@keyframes enterUp{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes fadeIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+@keyframes pageIn{
+  from{opacity:0;transform:translateY(24px) scale(.98)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+@media(max-width:1200px){
+  .dashboard,
+  .splash-shell,
+  .login-layout,
+  .bottom,
+  .account-body,
+  .aman-stats{
+    grid-template-columns:1fr;
+  }
+
+  .footer{grid-column:1}
+
+  .left-panel,
+  .right-panel{
+    min-height:auto;
+  }
+
+  .topbar{grid-template-columns:1fr}
+
+  .splash-text h1,
+  .login-panel h1{
+    font-size:44px;
+  }
+
+  .login-hero p{
+    width:100%;
+  }
+}
+
+@media(max-width:720px){
+  .splash,
+  .login,
+  .app{
+    padding:16px;
+  }
+
+  .quick-top,
+  .quick-grid,
+  .result-grid,
+  .scan-row{
+    grid-template-columns:1fr;
+  }
+
+  .scan-btn{width:100%}
+
+  .splash-logo{
+    position:relative;
+    top:auto;
+    right:auto;
+    margin:20px;
+  }
+
+  .splash-shell{display:block}
+
+  .splash-text{
+    padding:30px 24px;
+  }
+
+  .aman-hero h1{
+    font-size:36px;
+  }
+
+  .login-card-visual,
+  .info-glass{
+    position:relative;
+    right:auto;
+    left:auto;
+    bottom:auto;
+    margin-top:24px;
+    width:100%;
+  }
+}
+/* =========================================
+   ألوان نتيجة فحص الرابط
+========================================= */
+
+/* خطر منخفض */
+.result-inline.low-risk{
+  background:#ecfdf3;
+  border:2px solid #22c55e;
+}
+
+.result-inline.low-risk .risk-box{
+  background:#f7fff9;
+  border:1px solid #bbf7d0;
+}
+
+.result-inline.low-risk #score,
+.result-inline.low-risk #level{
+  color:#16a34a;
+}
+
+.result-inline.low-risk .tag{
+  background:#dcfce7;
+  color:#166534;
+}
+
+
+/* خطر متوسط */
+.result-inline.medium-risk{
+  background:#fff8e7;
+  border:2px solid #f59e0b;
+}
+
+.result-inline.medium-risk .risk-box{
+  background:#fffdf5;
+  border:1px solid #fde68a;
+}
+
+.result-inline.medium-risk #score,
+.result-inline.medium-risk #level{
+  color:#d97706;
+}
+
+.result-inline.medium-risk .tag{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+
+/* خطر مرتفع */
+.result-inline.high-risk{
+  background:#fff1f1;
+  border:2px solid #ef4444;
+}
+
+.result-inline.high-risk .risk-box{
+  background:#fffafa;
+  border:1px solid #fecaca;
+}
+
+.result-inline.high-risk #score,
+.result-inline.high-risk #level{
+  color:#dc2626;
+}
+
+.result-inline.high-risk .tag{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+
+/* حركة ناعمة عند تغير اللون */
+.result-inline,
+.result-inline .risk-box,
+.result-inline .tag,
+.result-inline #score,
+.result-inline #level{
+  transition:
+    background-color .3s ease,
+    border-color .3s ease,
+    color .3s ease;
+}
+
+
+/* شكل الزر أثناء الفحص */
+.scan-btn:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+}
+</style>
+</head>
+
+<body>
+
+<section id="splash" class="splash">
+  <div class="splash-shell">
+
+    <div class="logo-frame splash-logo">
+      <img src="/static/alinma-logo.png" alt="Alinma Logo">
+    </div>
+
+    <div class="splash-text">
+      <div class="ai-pill">
+        <span class="pulse"></span>
+        AmanCheck Protection
+      </div>
+
+      <h1>
+        حماية ذكية<br>
+        <span>قبل لحظة الدفع</span>
+      </h1>
+
+      <p>
+        AmanCheck يفحص روابط الدفع قبل إدخال بيانات البطاقة،
+        يحلل مؤشرات الخطر، ويعرض تنبيهًا واضحًا قبل مشاركة أي معلومات بنكية.
+      </p>
+
+      <button class="main-btn" onclick="goLogin()">ابدأ الآن</button>
+    </div>
+
+    <div class="splash-visual">
+      <div class="phone">
+        <div class="phone-card">
+          <div class="scan-beam"></div>
+          <div class="url-mini">https://pay-secure-check.com</div>
+
+          <div class="risk-circle">
+            <span>78%</span>
+          </div>
+
+          <div class="mini-tag">دومين مشبوه</div>
+          <div class="mini-tag">تحويل خارجي</div>
+          <div class="mini-tag">طلب بيانات حساسة</div>
+        </div>
+      </div>
+
+      <div class="float-card card-a">
+        <span>Risk Score</span>
+        <strong>High</strong>
+      </div>
+
+      <div class="float-card card-b">
+        <span>Auto Scan</span>
+        <strong>Enabled</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="login" class="login hidden">
+  <div class="login-wrap">
+
+    <div class="login-topbar">
+      <div class="login-tools">
+        <div class="lang-pill">English</div>
+        <div class="mode-pill">
+          الوضع الفاتح
+          <div class="mode-toggle"><span></span></div>
+        </div>
+      </div>
+
+      <div class="logo-frame login-logo">
+        <img src="/static/alinma-logo.png" alt="Alinma Logo">
+      </div>
+    </div>
+
+    <div class="login-layout">
+
+      <div class="login-panel">
+        <h1>تسجيل الدخول</h1>
+        <p class="sub">
+          ادخلي بياناتك للانتقال إلى لوحة التحكم الذكية وفحص روابط الدفع.
+        </p>
+
+        <label class="form-label">اسم المستخدم / الهوية الوطنية / الإقامة</label>
+        <input id="user" type="text" placeholder="مثال: Lujain">
+
+        <label class="form-label">كلمة المرور</label>
+        <input id="pass" type="password" placeholder="••••••••">
+
+        <div class="login-options">
+          <label class="remember">
+            <input type="checkbox">
+            تذكرني
+          </label>
+          <span>نسيت كلمة المرور؟</span>
+        </div>
+
+        <button id="loginBtn" class="login-btn" onclick="login()">التالي</button>
+
+        <button class="new-account">فتح حساب جديد</button>
+
+        <div class="login-links">
+          <a href="#">إيقاف الطوارئ</a>
+          <a href="#">نسيت اسم المستخدم</a>
+          <a href="#">المساعدة والدعم</a>
+          <a href="#">مستخدم جديد</a>
+        </div>
+      </div>
+
+      <div class="login-hero">
+        <h2>دخول آمن<br>بتجربة حديثة</h2>
+
+        <p>
+          AmanCheck يحاكي تجربة مصرفية آمنة، مع فحص ذكي لروابط الدفع
+          قبل إدخال بيانات البطاقة.
+        </p>
+
+        <div class="login-card-visual">
+          <b>AmanCheck</b>
+          <span>**** **** **** 2489</span>
+        </div>
+
+        <div class="info-glass">
+          يتم تحليل الرابط باستخدام مؤشرات مثل الدومين، الكلمات الحساسة،
+          الروابط المختصرة، والتحويلات الخارجية.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="dash" class="app hidden">
+  <div class="dashboard">
+
+    <aside class="left">
+      <div class="left-panel">
+
+        <div class="logo-frame logo-main">
+          <img src="/static/alinma-logo.png" alt="Alinma Logo">
+        </div>
+
+        <div class="quick-top">
+          <div class="quick-card">
+            <span class="badge">99+</span>
+            <div class="q-icon">🔔</div>
+            الإشعارات
+          </div>
+
+          <div class="quick-card">
+            <span class="badge">99+</span>
+            <div class="q-icon">🧾</div>
+            الفواتير
+          </div>
+
+          <div class="quick-card">
+            <div class="q-icon">👁️</div>
+            المخالفات
+          </div>
+        </div>
+
+        <div class="quick-grid">
+          <div class="quick-card">
+            <div class="q-icon">🤝</div>
+            نما
+          </div>
+
+          <div class="quick-card">
+            <div class="q-icon">💳</div>
+            طلب بطاقة
+          </div>
+
+          <div class="quick-card">
+            <div class="q-icon">📄</div>
+            الإنماء إكسبريس
+          </div>
+
+          <div class="quick-card">
+            <div class="q-icon">WU</div>
+            ويسترن يونيون
+          </div>
+        </div>
+
+        <div class="promo">
+          <h2>أكثر</h2>
+          <p>اجمع نقاط أكثر مع عملياتك المصرفية بكل سهولة</p>
+          <div class="promo-btn">اكتشف برنامج مكافآت الإنماء</div>
+        </div>
+
+        <div class="app-ad">
+          <h3>تطبيق الإنماء</h3>
+          <p>جيل جديد من الخدمات المصرفية</p>
+          <button>اكتشف التطبيق</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="mid">
+      <div class="topbar">
+        <div class="hello">مرحبًا، لجين</div>
+        <div class="search">
+          <span>بحث</span>
+          <span>⌕</span>
+        </div>
+      </div>
+
+      <section class="card">
+        <div class="card-head">
+          <h2>قائمة الحسابات</h2>
+          <b>إخفاء الرصيد 👁️</b>
+        </div>
+
+        <div class="account-body">
+          <button class="open-acct">فتح حساب جديد +</button>
+
+          <div class="acct-box">
+            <div class="acct-type">حساب جاري</div>
+            <div class="acct-num">**** **** **** 2489</div>
+            <div class="balance">
+              <span>الرصيد: **** ريال</span>
+              <span>عرض جميع الحسابات</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="aman-hero">
+        <h1>AmanCheck</h1>
+
+        <p>
+          أداة ذكية لفحص روابط الدفع قبل إدخال بيانات البطاقة،
+          وتحليل مؤشرات الخطر لحماية المستخدم من الروابط المشبوهة.
+        </p>
+
+        <div class="aman-stats">
+          <div class="aman-stat">
+            <span>روابط تم فحصها</span>
+            <strong>128</strong>
+          </div>
+
+          <div class="aman-stat">
+            <span>محاولات مشبوهة</span>
+            <strong>11</strong>
+          </div>
+
+          <div class="aman-stat">
+            <span>حالة الحماية</span>
+            <strong>مفعلة</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="card scan-card">
+        <div class="scan-card-head">
+          <h2>فحص رابط الدفع</h2>
+          <div class="check-icon">✓</div>
+        </div>
+
+        <p>
+          انسخي رابط الدفع هنا، والنظام يعطيك نسبة الخطر والأسباب بشكل واضح.
+        </p>
+
+        <div class="scan-row">
+          <button class="scan-btn" onclick="scan()">افحص الآن</button>
+          <input id="url" class="scan-input" type="text" placeholder="https://example.com/pay">
+        </div>
+
+        <div id="err" class="error">
+          الرجاء إدخال رابط صحيح يبدأ بـ http:// أو https://
+        </div>
+
+        <div class="auto-bar">
+          <span id="autoTxt">الفحص التلقائي مفعل</span>
+          <div id="tog" class="toggle" onclick="toggleAuto()"><span></span></div>
+        </div>
+
+        <div id="result" class="result-inline">
+          <div class="result-grid">
+            <div class="risk-box">
+              <span>نسبة الخطر</span>
+              <strong id="score">0%</strong>
+            </div>
+
+            <div class="risk-box">
+              <span>مستوى الخطر</span>
+              <strong id="level">منخفض</strong>
+            </div>
+          </div>
+
+          <div id="tags" class="tags"></div>
+        </div>
+      </section>
+
+      <section class="bottom">
+        <div class="bottom-card">
+          <div class="bottom-title">
+            <h2>حالات الرصيد لمدة 30 يوم</h2>
+            <div class="dark-pill">⌁</div>
+          </div>
+
+          <div class="chart">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none">
+              <path
+                d="M0,110 C60,95 75,35 135,58 C190,80 210,124 270,90 C330,54 350,40 410,62 C455,80 475,48 500,38"
+                fill="none"
+                stroke="#0b395b"
+                stroke-width="6"
+                stroke-linecap="round"
+              />
+              <path
+                d="M0,110 C60,95 75,35 135,58 C190,80 210,124 270,90 C330,54 350,40 410,62 C455,80 475,48 500,38 L500,150 L0,150 Z"
+                fill="rgba(11,57,91,.08)"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div class="bottom-card">
+          <div class="bottom-title">
+            <h2>البطاقات</h2>
+            <div class="dark-pill">1</div>
+          </div>
+
+          <div class="card-visual">
+            <span>AmanCheck Card</span>
+            <span>**** 2489</span>
+          </div>
+        </div>
+
+        <div class="bottom-card">
+          <div class="bottom-title">
+            <h2>التمويلات</h2>
+            <div class="dark-pill">0</div>
+          </div>
+
+          <div class="finance-visual">
+           <br>
+            لا يوجد لديك تمويلات
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <aside class="right">
+      <div class="right-panel">
+        <div class="right-top">
+          <span class="lang">English</span>
+          <button class="logout" onclick="logout()">خروج</button>
+        </div>
+
+        <div class="menu">
+          <div class="menu-title">
+            <span>لوحة التحكم</span>
+            <span>▦</span>
+          </div>
+
+          <div class="menu-item active"><span>الحسابات</span><span>⌄</span></div>
+          <div class="menu-item"><span>الحوالات</span><span>⌄</span></div>
+          <div class="menu-item"><span>سداد و دفع الفواتير</span><span>⌄</span></div>
+          <div class="menu-item"><span>التمويل والائتمان</span><span>⌄</span></div>
+          <div class="menu-item"><span>استثمار</span><span>⌄</span></div>
+          <div class="menu-item"><span>البطاقات</span><span>⌄</span></div>
+          <div class="menu-item"><span>الخدمات المصرفية المفتوحة</span><span>⌄</span></div>
+          <div class="menu-item"><span>الخدمات والأدوات</span><span>⌄</span></div>
+          <div class="menu-item"><span>المساعدة والدعم</span><span>⌄</span></div>
+          <div class="menu-item"><span>الملف الشخصي</span><span>⌄</span></div>
+
+          <div class="menu-footer">
+            <span>الوضع الفاتح</span>
+            <div class="mode-toggle"><span></span></div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="footer">
+      سياسة الخصوصية والأمان | إخلاء المسؤولية | الأحكام والشروط | 920028000
+    </div>
+
+  </div>
+</section>
+
+<script>
+let auto = true;
+let timer;
+
+const user = document.getElementById("user");
+const pass = document.getElementById("pass");
+const loginBtn = document.getElementById("loginBtn");
+
+function goLogin(){
+  const splash = document.getElementById("splash");
+  const loginPage = document.getElementById("login");
+
+  splash.style.transition = ".6s ease";
+  splash.style.opacity = "0";
+  splash.style.transform = "scale(1.03)";
+
+  setTimeout(()=>{
+    splash.classList.add("hidden");
+    loginPage.classList.remove("hidden");
+  },600);
+}
+
+[user, pass].forEach(input=>{
+  input.addEventListener("input", ()=>{
+    loginBtn.classList.toggle("ready", user.value.trim() && pass.value.trim());
+  });
+});
+
+function login(){
+  if(!user.value.trim() || !pass.value.trim()){
+    alert("اكتبي اسم المستخدم وكلمة المرور");
+    return;
+  }
+
+  const loginPage = document.getElementById("login");
+  const dash = document.getElementById("dash");
+
+  loginPage.style.transition = ".45s ease";
+  loginPage.style.opacity = "0";
+  loginPage.style.transform = "translateY(-20px)";
+
+  setTimeout(()=>{
+    loginPage.classList.add("hidden");
+    dash.classList.remove("hidden");
+  },450);
+}
+
+function logout(){
+  document.getElementById("dash").classList.add("hidden");
+  document.getElementById("login").classList.remove("hidden");
+}
+
+function valid(value){
+  try{
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:";
+  }catch{
+    return false;
+  }
+}
+
+async function scan(){
+  const input = document.getElementById("url");
+  const error = document.getElementById("err");
+  const result = document.getElementById("result");
+  const scanButton = document.querySelector(".scan-btn");
+
+  const scoreElement = document.getElementById("score");
+  const levelElement = document.getElementById("level");
+  const tagsElement = document.getElementById("tags");
+
+  const value = input.value.trim();
+
+  // إخفاء رسالة الخطأ والنتيجة القديمة
+  error.style.display = "none";
+  result.classList.remove("show");
+
+  // التأكد أن الرابط صحيح
+  if(!valid(value)){
+    error.textContent =
+      "الرجاء إدخال رابط صحيح يبدأ بـ http:// أو https://";
+
+    error.style.display = "block";
+    return;
+  }
+
+  // تغيير حالة الزر أثناء الفحص
+  scanButton.disabled = true;
+  scanButton.textContent = "جاري الفحص...";
+
+  try{
+
+    // إرسال الرابط إلى Flask
+    const response = await fetch("/scan", {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        url: value
+      })
+    });
+
+    // استقبال النتيجة من Flask
+    const data = await response.json();
+
+    // إذا رجع الباكند رسالة خطأ
+    if(!response.ok || !data.success){
+      throw new Error(
+        data.message || "تعذر فحص الرابط"
+      );
+    }
+
+    // عرض نسبة الخطر
+    scoreElement.textContent =
+      data.final_score + "%";
+
+    // عرض مستوى الخطر
+    levelElement.textContent =
+      data.level;
+
+    // إزالة ألوان النتيجة السابقة
+    result.classList.remove(
+      "low-risk",
+      "medium-risk",
+      "high-risk"
+    );
+
+    // تحديد لون المربع حسب مستوى الخطر
+    if(data.level === "منخفض"){
+
+      result.classList.add("low-risk");
+
+    }else if(data.level === "متوسط"){
+
+      result.classList.add("medium-risk");
+
+    }else{
+
+      result.classList.add("high-risk");
+    }
+
+    // عرض أسباب الخطر
+    tagsElement.innerHTML =
+      data.reasons
+        .map(reason => `
+          <span class="tag">${reason}</span>
+        `)
+        .join("");
+
+    // إظهار صندوق النتيجة
+    result.classList.add("show");
+
+  }catch(scanError){
+
+    // عرض الخطأ للمستخدم
+    error.textContent =
+      scanError.message ||
+      "حدث خطأ أثناء فحص الرابط";
+
+    error.style.display = "block";
+
+  }finally{
+
+    // إعادة الزر إلى حالته الطبيعية
+    scanButton.disabled = false;
+    scanButton.textContent = "افحص الآن";
+  }
+}
+
+function toggleAuto(){
+  auto = !auto;
+
+  document.getElementById("tog").classList.toggle("off", !auto);
+
+  document.getElementById("autoTxt").textContent =
+    auto ? "الفحص التلقائي مفعل" : "الفحص التلقائي متوقف";
+}
+
+document.getElementById("url").addEventListener("input", e=>{
+  document.getElementById("err").style.display = "none";
+  document.getElementById("result").classList.remove("show");
+
+  clearTimeout(timer);
+
+  if(auto && valid(e.target.value.trim())){
+    timer = setTimeout(scan, 650);
+  }
+});
+</script>
+
+</body>
+</html>
